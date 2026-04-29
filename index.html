@@ -464,7 +464,7 @@ html{scroll-behavior:smooth}
 
 <div class="cite-block"><span class="src">[MiMo-V2, Section 3.2]</span> 训练超参数: Stage 1 LR warmup&rarr;3.2&times;10<sup>-4</sup>&rarr;cosine至1.0&times;10<sup>-4</sup>; Stage 2 cosine至3.0&times;10<sup>-5</sup>; MTP loss 0.3&rarr;0.1。</div>
 <div class="cite-block"><span class="src">[MiMo-V2, Table 5]</span> Base模型全面对比。<span class="src">[MiMo-V2, Table 6]</span> 长上下文性能: NIAH-Multi 256K达96.7%。</div>
-<div class="fig"><img src="figures/mimov2_table5.png" alt="MiMo-V2 Table 5: Base model comparison"><div class="fig-cap">MiMo-V2-Flash Table 5 &amp; Figure 3: Base模型对比及Olmix结果 (原文第11页)</div></div>
+<div class="fig"><img src="figures/mimov2_table5.png" alt="MiMo-V2 Table 5: Base model comparison"><div class="fig-cap">MiMo-V2-Flash Table 5: Base模型全面对比 (原文第12页)</div></div>
 
 <h4>MiMo-7B vs MiMo-V2-Flash</h4>
 <div class="table-wrap">
@@ -483,7 +483,7 @@ html{scroll-behavior:smooth}
 <div class="cite-block"><span class="src">[DeepSeek-V4, Section 4.1 "Data Construction"]</span> 在V3基础上构建更多样、更高质量、更长上下文的语料。过滤批量自动生成和模板化内容以降低model collapse风险。数学和编程仍为核心。mid-training加入agentic data。总计32T+ tokens (未公开具体领域比例)。</div>
 <div class="fig"><img src="figures/deepseek_fig2.png" alt="DeepSeek-V4 Figure 2: Architecture"><div class="fig-cap">DeepSeek-V4 Figure 2: 模型架构概览 (原文第6页)</div></div>
 <div class="cite-block"><span class="src">[DeepSeek-V4, Section 4.2]</span> Flash: 32T, Muon优化器, 序列4K&rarr;16K&rarr;64K&rarr;1M, 前1T dense attention warmup。Pro: 33T, 峰值LR 2.0&times;10<sup>-4</sup>。</div>
-<div class="fig"><img src="figures/deepseek_posttraining.png" alt="DeepSeek-V4 Table 2-3: Training details"><div class="fig-cap">DeepSeek-V4 Table 2-3: 预训练配置详情 (原文第29页)</div></div>
+<div class="fig"><img src="figures/deepseek_posttraining.png" alt="DeepSeek-V4 Table 1: Base model comparison"><div class="fig-cap">DeepSeek-V4 Table 1: Base模型对比 (原文第28页)</div></div>
 <div class="cite-block"><span class="src">[DeepSeek-V4, Section 4.2.3]</span> 训练稳定性: Anticipatory Routing和SwiGLU Clamping解决MoE训练中的loss spikes。</div>
 
 <h4>Post-Training范式</h4>
