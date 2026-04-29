@@ -128,7 +128,7 @@ html{scroll-behavior:smooth}
 
 <h3>2.1 Data Darwinism Framework (L0-L9)</h3>
 <div class="cite-block"><span class="src">[daVinci, Figure 3]</span> 所有预训练数据源在Data Darwinism L0-L9分类体系上的映射</div>
-<div class="fig"><img src="figures/davinci_p5-05.png" alt="daVinci Figure 3: Data Darwinism L0-L9 Taxonomy"><div class="fig-cap">daVinci-LLM Figure 3: 预训练数据源在Data Darwinism L0-L9分类体系上的映射 (原文第5页)</div></div>
+<div class="fig"><img src="figures/davinci_fig3.png" alt="daVinci Figure 3: Data Darwinism L0-L9 Taxonomy"><div class="fig-cap">daVinci-LLM Figure 3: 预训练数据源在Data Darwinism L0-L9分类体系上的映射 (原文第5页)</div></div>
 <ul>
   <li><span class="level l0">L0</span> Data Acquisition &rarr; <span class="level l2">L2</span> Rule-based Filtering &rarr; <span class="level l3">L3</span> Model Filtering &rarr; <span class="level l4">L4</span> Generative Refinement &rarr; <span class="level l5">L5</span> Cognitive Completion</li>
 </ul>
@@ -136,7 +136,7 @@ html{scroll-behavior:smooth}
 
 <h3>2.2 数据池构成</h3>
 <div class="cite-block"><span class="src">[daVinci, Table 2]</span> 数据池组成和各训练阶段token分配。总计约7.58T tokens，分四大类。</div>
-<div class="fig"><img src="figures/davinci_p7-07.png" alt="daVinci Table 2: Data composition"><div class="fig-cap">daVinci-LLM Table 2: 数据池组成及各阶段token分配 (原文第7页)</div></div>
+<div class="fig"><img src="figures/davinci_table2.png" alt="daVinci Table 2: Data composition"><div class="fig-cap">daVinci-LLM Table 2: 数据池组成及各阶段token分配 (原文第7页)</div></div>
 <div class="table-wrap">
 <table>
   <tr><th>类别</th><th>数据源</th><th>级别</th><th>规模</th></tr>
@@ -156,7 +156,7 @@ html{scroll-behavior:smooth}
 
 <h4>Stage 1: 通用基础预训练 (6T tokens)</h4>
 <div class="cite-block"><span class="src">[daVinci, Figure 4]</span> Stage 1-1 和 1-2 的训练曲线，每5000步评估一次，19个benchmark。</div>
-<div class="fig"><img src="figures/davinci_p14-14.png" alt="daVinci Figure 4: Stage 1 training curves"><div class="fig-cap">daVinci-LLM Figure 4: Stage 1训练曲线 (原文第14页)</div></div>
+<div class="fig"><img src="figures/davinci_fig4.png" alt="daVinci Figure 4: Stage 1 training curves"><div class="fig-cap">daVinci-LLM Figure 4: Stage 1训练曲线 (原文第14页)</div></div>
 <div class="timeline">
   <div class="timeline-item">
     <strong>Stage 1-1 (基础构建, 4T)</strong>: CC 68.2% | Code 9.53% | Science 22.27% | QA 0%<br>
@@ -188,31 +188,31 @@ html{scroll-behavior:smooth}
   <div class="cite-block"><span class="src">[daVinci, Table 7]</span> L2 vs L3 代码过滤对比: MBPP +3.40, Overall +0.27</div>
   <div class="cite-block"><span class="src">[daVinci, Table 8]</span> L4数学精炼对比: <strong>MATH +7.00</strong>, GSM-8K +1.37, Overall +0.56。使用Qwen3-235B进行生成式精炼。</div>
   <div class="cite-block"><span class="src">[daVinci, Figure 7]</span> CC-QA和CodeQA合成数据的域特异性效果: CodeQA提升编程, CC-QA提升科学。</div>
-  <div class="fig"><img src="figures/davinci_p19-19.png" alt="daVinci Figure 7: CC-QA and CodeQA"><div class="fig-cap">daVinci-LLM Figure 7: CC-QA和CodeQA合成数据的域特异性效果 (原文第19页)</div></div>
+  <div class="fig"><img src="figures/davinci_fig7.png" alt="daVinci Figure 7: CC-QA and CodeQA"><div class="fig-cap">daVinci-LLM Figure 7: CC-QA和CodeQA合成数据的域特异性效果 (原文第19页)</div></div>
 </div>
 
 <div class="card">
   <div class="card-title">(2) 训练动态: 饱和速率差异</div>
   <div class="cite-block"><span class="src">[daVinci, Figure 8]</span> Stage 1的6T训练轨迹。General knowledge在~1T tokens内快速饱和; Code和Science在4T+仍持续增长。</div>
-  <div class="fig"><img src="figures/davinci_p20-20.png" alt="daVinci Figure 8: Stage 1 6T trajectory"><div class="fig-cap">daVinci-LLM Figure 8: Stage 1的6T训练轨迹 — 各领域饱和速率差异 (原文第20页)</div></div>
+  <div class="fig"><img src="figures/davinci_fig8.png" alt="daVinci Figure 8: Stage 1 6T trajectory"><div class="fig-cap">daVinci-LLM Figure 8: Stage 1的6T训练轨迹 — 各领域饱和速率差异 (原文第20页)</div></div>
   <div class="cite-block"><span class="src">[daVinci, Figure 9]</span> Stage 1-3(继续调比例) vs Stage 2(引入QA)的对比: Science +20.34 vs +15.75, Code +2.62 vs +2.15。"引入QA显著优于仅调整比例"。</div>
-  <div class="fig"><img src="figures/davinci_p21-21.png" alt="daVinci Figure 9: QA vs proportion adjustment"><div class="fig-cap">daVinci-LLM Figure 9: QA引入 vs 仅调整比例的效果对比 (原文第21页)</div></div>
+  <div class="fig"><img src="figures/davinci_fig9.png" alt="daVinci Figure 9: QA vs proportion adjustment"><div class="fig-cap">daVinci-LLM Figure 9: QA引入 vs 仅调整比例的效果对比 (原文第21页)</div></div>
 </div>
 
 <div class="card">
   <div class="card-title">(3) 数据混合设计</div>
   <div class="cite-block"><span class="src">[daVinci, Figure 11a]</span> Code-Science比例分析(雷达图): C-30-S-30(均衡)优于C-40-S-20(偏向代码)。QA固定30%，其余为CC。</div>
   <div class="cite-block"><span class="src">[daVinci, Figure 11b]</span> Stage 2-1中QA 10%-100%的效果: General在100%时急剧下降; Code在30%后非单调。</div>
-  <div class="fig"><img src="figures/davinci_p23-23.png" alt="daVinci Figure 11: Code-Science balance and QA ratio"><div class="fig-cap">daVinci-LLM Figure 11: (a) Code-Science比例雷达图 (b) QA比例效果分析 (原文第23页)</div></div>
+  <div class="fig"><img src="figures/davinci_fig11.png" alt="daVinci Figure 11: Code-Science balance and QA ratio"><div class="fig-cap">daVinci-LLM Figure 11: (a) Code-Science比例雷达图 (b) QA比例效果分析 (原文第23页)</div></div>
   <div class="cite-block"><span class="src">[daVinci, Table 9]</span> Stage 2-2中QA 30%/50%/70%均单调提升。70% QA: Overall 49.84。</div>
-  <div class="fig"><img src="figures/davinci_p24-24.png" alt="daVinci Table 9: Stage 2-2 QA ratios"><div class="fig-cap">daVinci-LLM Table 9: Stage 2-2 QA渐进浓度实验结果 (原文第24页)</div></div>
+  <div class="fig"><img src="figures/davinci_table9.png" alt="daVinci Table 9: Stage 2-2 QA ratios"><div class="fig-cap">daVinci-LLM Table 9: Stage 2-2 QA渐进浓度实验结果 (原文第24页)</div></div>
   <div class="insight green"><strong>结论:</strong> 渐进式混合——先保守(30% QA)建基础，再激进(70% QA)增强。<span class="cite">[daVinci, Section 4.3.2]</span></div>
 </div>
 
 <div class="card">
   <div class="card-title">(4) 评估方法的影响</div>
   <div class="cite-block"><span class="src">[daVinci, Figure 12]</span> MMLU上PPL评估 vs Generative评估导致不同模型排名。含QA训练的模型在Generative评估中表现不成比例地好。</div>
-  <div class="fig"><img src="figures/davinci_p25-25.png" alt="daVinci Figure 12: PPL vs Generative evaluation"><div class="fig-cap">daVinci-LLM Figure 12: PPL评估 vs Generative评估对比 (原文第25页)</div></div>
+  <div class="fig"><img src="figures/davinci_fig12.png" alt="daVinci Figure 12: PPL vs Generative evaluation"><div class="fig-cap">daVinci-LLM Figure 12: PPL评估 vs Generative评估对比 (原文第25页)</div></div>
 </div>
 </div>
 
@@ -225,7 +225,7 @@ html{scroll-behavior:smooth}
 
 <h3>3.2 Stage 1: Dolma 3 Mix (5.93T tokens)</h3>
 <div class="cite-block"><span class="src">[OLMo 3, Table 4]</span> Dolma 3 Mix数据组成: 9T pool &rarr; 6T最终训练混合 &rarr; 150B实验混合。<span class="src">[OLMo 3, Figure 8]</span> 预训练数据整理流程图。</div>
-<div class="fig"><img src="figures/olmo3_p14-014.png" alt="OLMo 3 Table 4 and Figure 8: Dolma 3 Mix"><div class="fig-cap">OLMo 3 Table 4 &amp; Figure 8: Dolma 3 Mix数据组成及预训练数据整理流程 (原文第14页)</div></div>
+<div class="fig"><img src="figures/olmo3_table4_fig8.png" alt="OLMo 3 Table 4 and Figure 8: Dolma 3 Mix"><div class="fig-cap">OLMo 3 Table 4 &amp; Figure 8: Dolma 3 Mix数据组成及预训练数据整理流程 (原文第14页)</div></div>
 <div class="table-wrap">
 <table>
   <tr><th>数据源</th><th>规模</th><th>比例</th></tr>
@@ -241,8 +241,8 @@ html{scroll-behavior:smooth}
 
 <h3>3.3 Constrained Data Mixing (Olmix)</h3>
 <div class="cite-block"><span class="src">[OLMo 3, Section 3.4.4, Figure 9]</span> 数据混合优化效果示例: 自然分布 vs 优化后分布 (Figure 9a/9c)，以及对下游评估的改善 (Figure 9b/9d)。</div>
-<div class="fig"><img src="figures/olmo3_p18-018.png" alt="OLMo 3 Figure 9 part 1"><div class="fig-cap">OLMo 3 Figure 9 (上): Constrained Data Mixing效果 (原文第18页)</div></div>
-<div class="fig"><img src="figures/olmo3_p19-019.png" alt="OLMo 3 Figure 9 part 2"><div class="fig-cap">OLMo 3 Figure 9 (下): 优化后分布及下游评估改善 (原文第19页)</div></div>
+<div class="fig"><img src="figures/olmo3_fig9a.png" alt="OLMo 3 Figure 9 part 1"><div class="fig-cap">OLMo 3 Figure 9 (上): Constrained Data Mixing效果 (原文第18页)</div></div>
+<div class="fig"><img src="figures/olmo3_fig9b.png" alt="OLMo 3 Figure 9 part 2"><div class="fig-cap">OLMo 3 Figure 9 (下): 优化后分布及下游评估改善 (原文第19页)</div></div>
 <div class="compare-grid">
   <div class="card">
     <div class="card-title">(A) Base Procedure — swarm-based</div>
@@ -266,7 +266,7 @@ html{scroll-behavior:smooth}
 
 <h3>3.4 Quality-Aware Upsampling</h3>
 <div class="cite-block"><span class="src">[OLMo 3, Figure 10]</span> Quality-aware upsampling曲线 vs flat upsampling曲线。底部40%丢弃，顶部5%重复7次。每个WebOrganizer主题独立生成曲线。</div>
-<div class="fig"><img src="figures/olmo3_p20-020.png" alt="OLMo 3 Figure 10: Quality-aware upsampling"><div class="fig-cap">OLMo 3 Figure 10: Quality-aware upsampling曲线 vs flat upsampling (原文第20页)</div></div>
+<div class="fig"><img src="figures/olmo3_fig10.png" alt="OLMo 3 Figure 10: Quality-aware upsampling"><div class="fig-cap">OLMo 3 Figure 10: Quality-aware upsampling曲线 vs flat upsampling (原文第20页)</div></div>
 
 <h3>3.5 Midtraining: Dolma 3 Dolmino Mix (100B tokens)</h3>
 <div class="cite-block"><span class="src">[OLMo 3, Table 5]</span> Midtraining数据完整组成。<span class="src">[OLMo 3, Figure 11]</span> Midtraining数据整理流程: 分布式微退火探索+集中评估。</div>
@@ -430,11 +430,11 @@ html{scroll-behavior:smooth}
 <div class="cite-block"><span class="src">[MiMo, Section 2.1 "Better Reasoning Data Extraction"]</span> 开发专门HTML提取工具优化数学公式和代码块保留。常用提取器(trafilatura)常丢失这些内容。</div>
 <div class="cite-block"><span class="src">[MiMo, Section 2.1 "Multi-Dimensional Data Filtering"]</span> 常用启发式规则过滤器(Penedo et al., 2023, 2024)会错误过滤含数学/代码的高质量网页。改为微调小型LLM作为质量标注器。</div>
 <div class="cite-block"><span class="src">[MiMo, Section 2.1 "Synthetic Reasoning Data"]</span> 合成推理数据可训练极多epoch不过拟合(与非推理数据截然不同)。</div>
-<div class="fig"><img src="figures/mimo_p6-06.png" alt="MiMo Figure 2: Pre-training data pipeline"><div class="fig-cap">MiMo-7B Figure 2: 预训练数据处理流水线 (原文第6页)</div></div>
+<div class="fig"><img src="figures/mimo_fig2.png" alt="MiMo Figure 2: Pre-training data pipeline"><div class="fig-cap">MiMo-7B Figure 2: 预训练数据处理流水线 (原文第6页)</div></div>
 
 <h4>三阶段混合策略</h4>
 <div class="cite-block"><span class="src">[MiMo, Section 2.1 "Three-Stage Data Mixture"]</span> 三阶段策略详述。</div>
-<div class="fig"><img src="figures/mimo_p8-08.png" alt="MiMo Figure 3: Pass@k curves"><div class="fig-cap">MiMo-7B Figure 3: 推理benchmark Pass@k曲线 (原文第8页)</div></div>
+<div class="fig"><img src="figures/mimo_fig3.png" alt="MiMo Figure 3: Pass@k curves"><div class="fig-cap">MiMo-7B Figure 3: 推理benchmark Pass@k曲线 (原文第8页)</div></div>
 <div class="timeline">
   <div class="timeline-item"><strong>Stage 1:</strong> 所有数据(除合成推理响应)。下采样广告/新闻/招聘。上下文 8,192</div>
   <div class="timeline-item s2"><strong>Stage 2:</strong> 数学+代码增到 <strong>~70%</strong>。上下文 8,192 <span class="cite">[MiMo, Sec 2.1]</span></div>
@@ -442,17 +442,17 @@ html{scroll-behavior:smooth}
 </div>
 
 <div class="cite-block"><span class="src">[MiMo, Figure 3]</span> MiMo-7B-Base在多个推理benchmark上的Pass@k曲线，显著高于同规模模型。<span class="src">[MiMo, Table 1]</span> 与其他开源7B模型的全面对比。</div>
-<div class="fig"><img src="figures/mimo_p9-09.png" alt="MiMo Table 1: model comparison"><div class="fig-cap">MiMo-7B Table 1: 与其他开源7B模型的全面对比 (原文第9页)</div></div>
+<div class="fig"><img src="figures/mimo_table1.png" alt="MiMo Table 1: model comparison"><div class="fig-cap">MiMo-7B Table 1: 与其他开源7B模型的全面对比 (原文第9页)</div></div>
 
 <h3>7.2 MiMo-V2-Flash</h3>
 <div class="card"><span class="label">Xiaomi</span><span class="label green">309B MoE (15B active)</span><span class="label purple">~27T tokens</span></div>
 
 <div class="cite-block"><span class="src">[MiMo-V2, Section 3 "Pre-Training"]</span> 数据管线沿用MiMo-7B，刻意向长程依赖数据倾斜: 长文本网页、仓库级代码、PR/issue/commit历史。</div>
-<div class="fig"><img src="figures/mimov2_p5-05.png" alt="MiMo-V2 Figure 2: Architecture"><div class="fig-cap">MiMo-V2-Flash Figure 2: 模型架构与训练流程 (原文第5页)</div></div>
+<div class="fig"><img src="figures/mimov2_fig2.png" alt="MiMo-V2 Figure 2: Architecture"><div class="fig-cap">MiMo-V2-Flash Figure 2: 模型架构与训练流程 (原文第5页)</div></div>
 
 <h4>三阶段Data Scheduler</h4>
 <div class="cite-block"><span class="src">[MiMo-V2, Section 3.1 "Data Scheduler"]</span> 三阶段详细描述。</div>
-<div class="fig"><img src="figures/mimov2_p7-07.png" alt="MiMo-V2 Data Scheduler tables"><div class="fig-cap">MiMo-V2-Flash Table 2-4: Data Scheduler各阶段配置 (原文第7页)</div></div>
+<div class="fig"><img src="figures/mimov2_tables.png" alt="MiMo-V2 Data Scheduler tables"><div class="fig-cap">MiMo-V2-Flash Table 2-4: Data Scheduler各阶段配置 (原文第7页)</div></div>
 <div class="table-wrap">
 <table>
   <tr><th>阶段</th><th>Tokens</th><th>特征</th><th>合成推理</th><th>上下文</th></tr>
@@ -464,7 +464,7 @@ html{scroll-behavior:smooth}
 
 <div class="cite-block"><span class="src">[MiMo-V2, Section 3.2]</span> 训练超参数: Stage 1 LR warmup&rarr;3.2&times;10<sup>-4</sup>&rarr;cosine至1.0&times;10<sup>-4</sup>; Stage 2 cosine至3.0&times;10<sup>-5</sup>; MTP loss 0.3&rarr;0.1。</div>
 <div class="cite-block"><span class="src">[MiMo-V2, Table 5]</span> Base模型全面对比。<span class="src">[MiMo-V2, Table 6]</span> 长上下文性能: NIAH-Multi 256K达96.7%。</div>
-<div class="fig"><img src="figures/mimov2_p11-11.png" alt="MiMo-V2 Table 5: Base model comparison"><div class="fig-cap">MiMo-V2-Flash Table 5 &amp; Figure 3: Base模型对比及Olmix结果 (原文第11页)</div></div>
+<div class="fig"><img src="figures/mimov2_table5.png" alt="MiMo-V2 Table 5: Base model comparison"><div class="fig-cap">MiMo-V2-Flash Table 5 &amp; Figure 3: Base模型对比及Olmix结果 (原文第11页)</div></div>
 
 <h4>MiMo-7B vs MiMo-V2-Flash</h4>
 <div class="table-wrap">
@@ -481,14 +481,14 @@ html{scroll-behavior:smooth}
 <div class="card"><span class="label">DeepSeek</span><span class="label green">Flash 284B(13B) / Pro 1.6T(49B)</span><span class="label purple">32-33T tokens</span></div>
 
 <div class="cite-block"><span class="src">[DeepSeek-V4, Section 4.1 "Data Construction"]</span> 在V3基础上构建更多样、更高质量、更长上下文的语料。过滤批量自动生成和模板化内容以降低model collapse风险。数学和编程仍为核心。mid-training加入agentic data。总计32T+ tokens (未公开具体领域比例)。</div>
-<div class="fig"><img src="figures/deepseek_p6-06.png" alt="DeepSeek-V4 Figure 2: Architecture"><div class="fig-cap">DeepSeek-V4 Figure 2: 模型架构概览 (原文第6页)</div></div>
+<div class="fig"><img src="figures/deepseek_fig2.png" alt="DeepSeek-V4 Figure 2: Architecture"><div class="fig-cap">DeepSeek-V4 Figure 2: 模型架构概览 (原文第6页)</div></div>
 <div class="cite-block"><span class="src">[DeepSeek-V4, Section 4.2]</span> Flash: 32T, Muon优化器, 序列4K&rarr;16K&rarr;64K&rarr;1M, 前1T dense attention warmup。Pro: 33T, 峰值LR 2.0&times;10<sup>-4</sup>。</div>
-<div class="fig"><img src="figures/deepseek_p29-29.png" alt="DeepSeek-V4 Table 2-3: Training details"><div class="fig-cap">DeepSeek-V4 Table 2-3: 预训练配置详情 (原文第29页)</div></div>
+<div class="fig"><img src="figures/deepseek_posttraining.png" alt="DeepSeek-V4 Table 2-3: Training details"><div class="fig-cap">DeepSeek-V4 Table 2-3: 预训练配置详情 (原文第29页)</div></div>
 <div class="cite-block"><span class="src">[DeepSeek-V4, Section 4.2.3]</span> 训练稳定性: Anticipatory Routing和SwiGLU Clamping解决MoE训练中的loss spikes。</div>
 
 <h4>Post-Training范式</h4>
 <div class="cite-block"><span class="src">[DeepSeek-V4, Section 1 Introduction]</span> 两阶段: (1) 独立培养领域专家(数学/编码/agent/指令) &mdash; SFT+GRPO; (2) On-policy蒸馏合并 &mdash; reverse KL loss。</div>
-<div class="fig"><img src="figures/deepseek_p40-40.png" alt="DeepSeek-V4 Post-training details"><div class="fig-cap">DeepSeek-V4: Post-Training评估结果 (原文第40页)</div></div>
+<div class="fig"><img src="figures/deepseek_fig8_9.png" alt="DeepSeek-V4 Post-training details"><div class="fig-cap">DeepSeek-V4: Post-Training评估结果 (原文第40页)</div></div>
 </div>
 
 <!-- ===== S8 NEW ===== -->
@@ -570,7 +570,7 @@ html{scroll-behavior:smooth}
   <div class="card-title">9.5 领域专家蒸馏</div>
   <span class="cite">[MiMo-V2, Table 7]</span> MOPD效果: AIME 89.3&rarr;94.1 (超越最佳教师93.9), LCB 77.5&rarr;83.2<br>
   <span class="cite">[DeepSeek-V4, Section 1]</span> 独立领域专家 + on-policy蒸馏
-  <div class="fig"><img src="figures/mimov2_p14-14.png" alt="MiMo-V2 Table 7: MOPD results"><div class="fig-cap">MiMo-V2-Flash Table 7: MOPD蒸馏效果 — 学生超越教师 (原文第14页)</div></div>
+  <div class="fig"><img src="figures/mimov2_table7.png" alt="MiMo-V2 Table 7: MOPD results"><div class="fig-cap">MiMo-V2-Flash Table 7: MOPD蒸馏效果 — 学生超越教师 (原文第14页)</div></div>
 </div>
 
 <h3>9.6 更新后优先级</h3>
