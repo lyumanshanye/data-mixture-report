@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Mixture 方案调研报告</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2333;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --accent: #58a6ff;
+  --accent2: #3fb950;
+  --accent3: #d2a8ff;
+  --accent4: #f0883e;
+  --accent5: #f778ba;
+  --red: #ff7b72;
+  --tag-bg: rgba(88,166,255,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  line-height:1.7;
+  font-size:15px;
+}
+.container{max-width:1100px;margin:0 auto;padding:20px 24px 80px}
+
+/* Header */
+.hero{
+  text-align:center;
+  padding:60px 20px 40px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:40px;
+}
+.hero h1{
+  font-size:2.2em;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:8px;
+}
+.hero .subtitle{color:var(--text-dim);font-size:1.05em;margin-bottom:20px}
+.hero .meta{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.hero .meta span{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:4px 14px;
+  font-size:0.85em;
+  color:var(--text-dim);
+}
+
+/* TOC */
+.toc{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:24px 30px;
+  margin-bottom:40px;
+}
+.toc h2{font-size:1.2em;margin-bottom:12px;color:var(--accent)}
+.toc ol{padding-left:20px}
+.toc li{margin:6px 0}
+.toc a{color:var(--text);text-decoration:none;transition:color .2s}
+.toc a:hover{color:var(--accent)}
+.toc .new-tag{
+  background:var(--accent2);
+  color:#000;
+  font-size:0.7em;
+  padding:1px 6px;
+  border-radius:4px;
+  margin-left:6px;
+  font-weight:600;
+  vertical-align:middle;
+}
+
+/* Sections */
+.section{margin-bottom:48px}
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+  padding-bottom:10px;
+  border-bottom:2px solid var(--border);
+}
+.section-num{
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  color:#fff;
+  font-weight:700;
+  width:36px;height:36px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.95em;
+  flex-shrink:0;
+}
+.section-header h2{font-size:1.4em;font-weight:600}
+
+h3{font-size:1.15em;color:var(--accent);margin:24px 0 10px;font-weight:600}
+h4{font-size:1.05em;color:var(--accent3);margin:18px 0 8px;font-weight:600}
+
+p{margin:8px 0}
+
+/* Cards */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:18px 22px;
+  margin:14px 0;
+}
+.card-title{font-weight:600;color:var(--accent);margin-bottom:6px}
+.card .label{
+  display:inline-block;
+  background:var(--tag-bg);
+  color:var(--accent);
+  padding:2px 8px;
+  border-radius:4px;
+  font-size:0.8em;
+  margin-right:6px;
+  margin-bottom:4px;
+}
+.card .label.green{background:rgba(63,185,80,0.12);color:var(--accent2)}
+.card .label.purple{background:rgba(210,168,255,0.12);color:var(--accent3)}
+.card .label.orange{background:rgba(240,136,62,0.12);color:var(--accent4)}
+.card .label.pink{background:rgba(247,120,186,0.12);color:var(--accent5)}
+.card .label.red{background:rgba(255,123,114,0.12);color:var(--red)}
+
+/* Insight boxes */
+.insight{
+  background:rgba(88,166,255,0.06);
+  border-left:3px solid var(--accent);
+  padding:12px 18px;
+  margin:14px 0;
+  border-radius:0 8px 8px 0;
+}
+.insight.green{background:rgba(63,185,80,0.06);border-left-color:var(--accent2)}
+.insight.purple{background:rgba(210,168,255,0.06);border-left-color:var(--accent3)}
+.insight.orange{background:rgba(240,136,62,0.06);border-left-color:var(--accent4)}
+.insight.red{background:rgba(255,123,114,0.06);border-left-color:var(--red)}
+.insight strong{color:var(--accent)}
+.insight.green strong{color:var(--accent2)}
+.insight.purple strong{color:var(--accent3)}
+
+/* Lists */
+ul,ol{padding-left:22px;margin:6px 0}
+li{margin:4px 0}
+
+/* Tables */
+.table-wrap{overflow-x:auto;margin:14px 0}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.9em;
+  background:var(--surface);
+  border-radius:8px;
+  overflow:hidden;
+}
+th{
+  background:var(--surface2);
+  color:var(--accent);
+  font-weight:600;
+  text-align:left;
+  padding:10px 14px;
+  border-bottom:2px solid var(--border);
+  white-space:nowrap;
+}
+td{
+  padding:8px 14px;
+  border-bottom:1px solid var(--border);
+}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(88,166,255,0.04)}
+
+/* Priority badges */
+.priority{
+  display:inline-block;
+  padding:2px 10px;
+  border-radius:12px;
+  font-size:0.8em;
+  font-weight:600;
+}
+.priority.p1{background:rgba(255,123,114,0.15);color:var(--red)}
+.priority.p2{background:rgba(240,136,62,0.15);color:var(--accent4)}
+.priority.p3{background:rgba(139,148,158,0.15);color:var(--text-dim)}
+
+/* Timeline */
+.timeline{position:relative;padding-left:28px;margin:14px 0}
+.timeline::before{
+  content:'';position:absolute;left:8px;top:4px;bottom:4px;
+  width:2px;background:var(--border);
+}
+.timeline-item{position:relative;margin:14px 0}
+.timeline-item::before{
+  content:'';position:absolute;left:-24px;top:6px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--accent);border:2px solid var(--bg);
+}
+.timeline-item.s2::before{background:var(--accent3)}
+.timeline-item.s3::before{background:var(--accent2)}
+
+/* Data level pills */
+.level{
+  display:inline-block;
+  padding:1px 8px;
+  border-radius:4px;
+  font-size:0.8em;
+  font-weight:600;
+  margin-right:4px;
+}
+.level.l0,.level.l1{background:rgba(139,148,158,0.2);color:var(--text-dim)}
+.level.l2{background:rgba(88,166,255,0.15);color:var(--accent)}
+.level.l3{background:rgba(63,185,80,0.15);color:var(--accent2)}
+.level.l4{background:rgba(210,168,255,0.15);color:var(--accent3)}
+.level.l5{background:rgba(240,136,62,0.15);color:var(--accent4)}
+
+/* Comparison grid */
+.compare-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin:14px 0;
+}
+@media(max-width:700px){.compare-grid{grid-template-columns:1fr}}
+
+/* Footer */
+.footer{
+  text-align:center;
+  padding:30px;
+  border-top:1px solid var(--border);
+  color:var(--text-dim);
+  font-size:0.85em;
+  margin-top:40px;
+}
+
+/* Smooth scroll */
+html{scroll-behavior:smooth}
+
+/* Back to top */
+.back-top{
+  position:fixed;bottom:30px;right:30px;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;font-size:1.2em;
+  opacity:0.8;transition:opacity .2s;
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
+}
+.back-top:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Data Mixture 方案调研报告</h1>
+  <div class="subtitle">基于 daVinci-LLM, OLMo 3, MiMo-7B, MiMo-V2-Flash, DeepSeek-V4 的对比分析及文献综述</div>
+  <div class="meta">
+    <span>2026-04-29</span>
+    <span>5 篇核心论文</span>
+    <span>20+ 相关文献</span>
+    <span>9 类实验方案</span>
+  </div>
+</div>
+
+<!-- TOC -->
+<nav class="toc" id="toc">
+  <h2>目录</h2>
+  <ol>
+    <li><a href="#s1">核心论文概述</a></li>
+    <li><a href="#s2">daVinci-LLM 的 Data Mixture 方案详解</a></li>
+    <li><a href="#s3">OLMo 3 的 Data Mixture 方案详解</a></li>
+    <li><a href="#s4">daVinci-LLM 与 OLMo 3 的系统对比</a></li>
+    <li><a href="#s5">Data Mixture 相关文献综述</a></li>
+    <li><a href="#s6">拟定 Data Mixture 实验方案</a></li>
+    <li><a href="#s7">补充分析: MiMo-7B, MiMo-V2-Flash, DeepSeek-V4<span class="new-tag">NEW</span></a></li>
+    <li><a href="#s8">跨论文共识与补充结论<span class="new-tag">NEW</span></a></li>
+    <li><a href="#s9">补充论文的实验方案启示<span class="new-tag">NEW</span></a></li>
+  </ol>
+</nav>
+
+<!-- ============ Section 1 ============ -->
+<div class="section" id="s1">
+  <div class="section-header"><div class="section-num">1</div><h2>核心论文概述</h2></div>
+
+  <div class="compare-grid">
+    <div class="card">
+      <div class="card-title">daVinci-LLM: Towards the Science of Pretraining</div>
+      <p><span class="label">SII-GAIR</span><span class="label purple">arXiv:2603.27164v1</span><span class="label green">2026年3月</span></p>
+      <ul>
+        <li>模型规模: <strong>3B参数, 8T tokens</strong>训练</li>
+        <li>核心贡献: Data Darwinism框架(L0-L9分类体系)，200+消融实验系统研究预训练中的数据处理深度、训练动态和混合策略</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">OLMo 3</div>
+      <p><span class="label">Allen Institute for AI</span><span class="label purple">arXiv:2512.13961v2</span><span class="label green">2026年4月更新</span></p>
+      <ul>
+        <li>模型规模: <strong>7B和32B参数, 最多5.9T tokens</strong>预训练</li>
+        <li>核心贡献: Constrained data mixing (Olmix)方法，基于swarm代理模型进行混合优化，结合quality-aware upsampling和conditional mixing</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Section 2 ============ -->
+<div class="section" id="s2">
+  <div class="section-header"><div class="section-num">2</div><h2>daVinci-LLM 的 Data Mixture 方案详解</h2></div>
+
+  <h3>2.1 数据分类体系: Data Darwinism Framework (L0-L9)</h3>
+  <p>daVinci-LLM采用Data Darwinism框架 [Qin et al., 2026, arXiv:2602.07824] 对所有数据源按处理深度进行L0-L9分级标注:</p>
+  <ul>
+    <li><span class="level l0">L0</span> <strong>Data Acquisition</strong>: 从网页、PDF、代码平台等收集原始数据</li>
+    <li><span class="level l1">L1</span> <strong>Format Normalization</strong>: 统一格式转换(OCR、HTML解析等)</li>
+    <li><span class="level l2">L2</span> <strong>Rule-based Filtering</strong>: 基于规则的过滤(去重、短文过滤、语言过滤)</li>
+    <li><span class="level l3">L3</span> <strong>Lightweight Model Filtering</strong>: 轻量模型过滤(教育价值评分、领域分类)</li>
+    <li><span class="level l4">L4</span> <strong>Generative Refinement</strong>: 生成式精炼(用LLM去噪、结构重组，保持语义等价)</li>
+    <li><span class="level l5">L5</span> <strong>Cognitive Completion</strong>: 认知补全(用LLM重建推理链、术语解释、教学桥接)</li>
+    <li><span class="level l0">L6-L9</span> 更高阶的合成(上下文补全、环境合成、生态合成、世界合成)</li>
+  </ul>
+
+  <div class="insight">
+    <strong>关键洞察:</strong> 处理深度(processing depth)是与数据量(volume)同等重要的优化维度。在固定数据量的条件下，从L2提升到L3-L5可以系统性地提升模型能力。
+  </div>
+
+  <h3>2.2 数据池构成</h3>
+  <p>总数据池约 <strong>7.58T tokens</strong>，分为四大类:</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>类别</th><th>数据源</th><th>级别</th><th>规模</th></tr>
+      <tr><td rowspan="1"><strong>General</strong><br>~4.28T</td><td>Nemotron-CC-v1 (99个CC快照, 5个质量层级)</td><td><span class="level l3">L3</span></td><td>4.28T</td></tr>
+      <tr><td rowspan="4"><strong>Code</strong><br>~598B</td><td>Self-Crawled GitHub (10星+)</td><td><span class="level l3">L3</span></td><td>187B</td></tr>
+      <tr><td>Nemotron-Pretraining-Code-v1-non-synthetic</td><td><span class="level l3">L3</span></td><td>220B</td></tr>
+      <tr><td>Nemotron-Pretraining-Code-v1-synthetic-code</td><td><span class="level l5">L5</span></td><td>171B</td></tr>
+      <tr><td>TxT360-Stack-Exchange</td><td><span class="level l2">L2</span></td><td>20B</td></tr>
+      <tr><td rowspan="5"><strong>Science</strong><br>~1.94T</td><td>MegaMath-Web / Web-Pro / Synth-Code</td><td><span class="level l3">L3</span>-<span class="level l5">L5</span></td><td>249B</td></tr>
+      <tr><td>MegaMath Refined (Qwen3-235B精炼)</td><td><span class="level l4">L4</span></td><td>176B</td></tr>
+      <tr><td>Nemotron-CC-Math系列</td><td><span class="level l4">L4</span>-<span class="level l5">L5</span></td><td>322B</td></tr>
+      <tr><td>Darwin-Science-Book / Paper</td><td><span class="level l4">L4</span></td><td>466B</td></tr>
+      <tr><td>Darwin-Science-Paper-GPT / Qwen</td><td><span class="level l5">L5</span></td><td>730B</td></tr>
+      <tr><td rowspan="3"><strong>QA</strong><br>~734B</td><td>Nemotron-CC-v1 Synthetic QA</td><td><span class="level l5">L5</span></td><td>492B</td></tr>
+      <tr><td>Nemotron-Pretraining-SFT系列</td><td><span class="level l5">L5</span></td><td>171B</td></tr>
+      <tr><td>Darwin-Science-Book QA + 其他</td><td><span class="level l5">L5</span></td><td>71B</td></tr>
+    </table>
+  </div>
+
+  <h3>2.3 训练阶段与混合策略</h3>
+  <p>两阶段自适应课程(adaptive curriculum)，总计 <strong>8T tokens</strong>:</p>
+
+  <h4>Stage 1: 通用基础预训练 (6T tokens)</h4>
+  <div class="timeline">
+    <div class="timeline-item">
+      <strong>Stage 1-1 (基础构建, 4T tokens)</strong>
+      <div class="table-wrap">
+        <table>
+          <tr><th>CC</th><th>Code</th><th>Science</th><th>QA</th></tr>
+          <tr><td>2.73T (68.2%)</td><td>381B (9.53%)</td><td>891B (22.27%)</td><td>0%</td></tr>
+        </table>
+      </div>
+      <p>学习率: 2000步warmup + constant 3e-4 | Batch Size: 渐进式 1024 &rarr; 2048 &rarr; 4096</p>
+    </div>
+    <div class="timeline-item s2">
+      <strong>Stage 1-2 (推理增强, 2T tokens)</strong>
+      <div class="table-wrap">
+        <table>
+          <tr><th>CC</th><th>Code</th><th>Science</th><th>QA</th></tr>
+          <tr><td>1.11T (55.42%) <span style="color:var(--red)">&darr;12.8%</span></td><td>233B (11.66%) <span style="color:var(--accent2)">&uarr;2.1%</span></td><td>658B (32.92%) <span style="color:var(--accent2)">&uarr;10.6%</span></td><td>0%</td></tr>
+        </table>
+      </div>
+      <p>学习率: cosine decay 3e-4 &rarr; 3e-5</p>
+    </div>
+  </div>
+
+  <h4>Stage 2: 推理能力增强 (2T tokens)</h4>
+  <div class="timeline">
+    <div class="timeline-item s2">
+      <strong>Stage 2-1 (平衡基础, 1T tokens)</strong>
+      <div class="table-wrap">
+        <table>
+          <tr><th>CC</th><th>Code</th><th>Science</th><th>QA</th></tr>
+          <tr><td>100B (10%)</td><td>300B (30%)</td><td>300B (30%)</td><td>300B (30%)</td></tr>
+        </table>
+      </div>
+      <p>学习率: 2000步warmup + constant 3e-5</p>
+    </div>
+    <div class="timeline-item s3">
+      <strong>Stage 2-2 (QA密集增强, 1T tokens)</strong>
+      <div class="table-wrap">
+        <table>
+          <tr><th>CC</th><th>Code</th><th>Science</th><th>QA</th></tr>
+          <tr><td>~8.85%</td><td>~2.61%</td><td>~18.84%</td><td><strong>~70%</strong></td></tr>
+        </table>
+      </div>
+      <p>学习率: constant 3e-5 | QA中涵盖code/science/general QA</p>
+    </div>
+  </div>
+
+  <h3>2.4 关键消融实验发现</h3>
+
+  <div class="card">
+    <div class="card-title">(1) 数据处理深度的影响</div>
+    <ul>
+      <li><span class="level l2">L2</span>&rarr;<span class="level l3">L3</span> 代码过滤: MBPP +3.40, Overall +0.27</li>
+      <li>Baseline &rarr;<span class="level l4">L4</span> 数学精炼: <strong>MATH +7.00</strong>, GSM-8K +1.37</li>
+      <li><span class="level l5">L5</span> Synthetic QA: 展现强领域特异性(CodeQA提升编程，CC-QA提升科学)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">(2) 训练动态</div>
+    <ul>
+      <li>General knowledge: 在 ~1T tokens 内快速饱和</li>
+      <li>Code和Science: 在 4T+ tokens 仍持续增长</li>
+      <li>引入QA &gt; 仅调整比例: Science +20.34 vs +15.75, Code +2.62 vs +2.15</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">(3) 数据混合设计</div>
+    <ul>
+      <li>Code-Science平衡至关重要: C-30-S-30 (均衡) 优于 C-40-S-20 (偏向代码)</li>
+      <li>QA浓度的阶段依赖性: Stage 2-1中Code在30%后崩溃; Stage 2-2中30%/50%/70%均单调提升</li>
+    </ul>
+    <div class="insight green">
+      <strong>结论:</strong> 渐进式混合策略——先保守建立基础(30% QA)，再激进增强(70% QA)
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">(4) 评估方法的影响</div>
+    <ul>
+      <li>PPL评估和Generative评估会导致不同的模型排名</li>
+      <li>建议同时使用两种评估协议</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ Section 3 ============ -->
+<div class="section" id="s3">
+  <div class="section-header"><div class="section-num">3</div><h2>OLMo 3 的 Data Mixture 方案详解</h2></div>
+
+  <h3>3.1 训练架构概览</h3>
+  <p>三阶段基础模型训练:</p>
+  <div class="timeline">
+    <div class="timeline-item"><strong>Stage 1: Pretraining</strong> — 最多5.9T tokens</div>
+    <div class="timeline-item s2"><strong>Stage 2: Midtraining</strong> — 100B tokens</div>
+    <div class="timeline-item s3"><strong>Stage 3: Long-context Extension</strong> — 50-100B tokens</div>
+  </div>
+
+  <h3>3.2 Stage 1 预训练数据: Dolma 3 Mix (5.93T tokens)</h3>
+  <p>数据池: 9.31T tokens &rarr; 最终训练混合: <strong>5.93T tokens</strong></p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>数据源</th><th>规模</th><th>比例</th></tr>
+      <tr><td>Common Crawl (网页)</td><td>4.51T</td><td>76.1%</td></tr>
+      <tr><td>olmOCR science PDFs (学术文档)</td><td>805B</td><td>13.6%</td></tr>
+      <tr><td>Stack-Edu Rebalanced (代码)</td><td>409B</td><td>6.89%</td></tr>
+      <tr><td>arXiv (LaTeX论文)</td><td>50.8B</td><td>0.86%</td></tr>
+      <tr><td>FineMath 3+ (数学网页)</td><td>152B</td><td>2.56%</td></tr>
+      <tr><td>Wikipedia &amp; Wikibooks</td><td>2.51B</td><td>0.04%</td></tr>
+    </table>
+  </div>
+
+  <div class="insight">
+    <strong>关键原则:</strong> 预训练阶段仅包含大规模自然数据源(不含task data/QA)。Task data保留到midtraining阶段——因其规模不足以在预训练尺度产生影响，且会干扰消融实验。
+  </div>
+
+  <h3>3.3 Constrained Data Mixing (Olmix) 方法</h3>
+  <div class="compare-grid">
+    <div class="card">
+      <div class="card-title">(A) Base Procedure — 基于swarm</div>
+      <ol>
+        <li><strong>Swarm Construction:</strong> 训练大量30M参数代理模型(3B tokens), Dirichlet采样混合比例, swarm大小 = 5 &times; 领域数</li>
+        <li><strong>Per-task Regression:</strong> 每个代理模型提供 (混合权重 &rarr; 任务BPB) 数据点, 拟合GLM</li>
+        <li><strong>Mix Optimization:</strong> 最小化平均任务BPB, 约束重复不超4-7x</li>
+      </ol>
+    </div>
+    <div class="card">
+      <div class="card-title">(B) Conditional Mixing — 元流程</div>
+      <ul>
+        <li>将已优化的混合作为"虚拟领域"冻结，仅在新领域上重新优化</li>
+        <li><strong>Round 1:</strong> 优化24个WebOrganizer类别</li>
+        <li><strong>Round 2:</strong> 优化编程语言混合 (固定web:code=75:25)</li>
+        <li><strong>Round 3:</strong> 整合PDF数据</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>3.4 Quality-Aware Upsampling</h3>
+  <div class="card">
+    <ul>
+      <li>对每个WebOrganizer的24个主题分别生成上采样曲线</li>
+      <li>底部40%数据丢弃，顶部5%数据重复7次</li>
+      <li>相比flat filtering，在数据受限场景下表现更好</li>
+      <li>效果: 平均BPB改善0.056，54个任务中仅13个退化(均&lt;0.035)</li>
+    </ul>
+  </div>
+
+  <h3>3.5 Stage 2 Midtraining: Dolma 3 Dolmino Mix (100B tokens)</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>类别</th><th>数据源</th><th>规模</th><th>比例</th></tr>
+      <tr><td rowspan="3"><strong>Math</strong></td><td>Dolmino Math</td><td>10.7B</td><td rowspan="3">19.2%</td></tr>
+      <tr><td>CraneMath (Qwen3重写FineMath4+)</td><td>5.62B</td></tr>
+      <tr><td>MegaMatt + TinyMATH系列</td><td>2.87B</td></tr>
+      <tr><td rowspan="2"><strong>Code</strong></td><td>Stack-Edu FIM</td><td>10.0B</td><td rowspan="2">20.0%</td></tr>
+      <tr><td>CraneCode (Qwen3两阶段重写)</td><td>10.0B</td></tr>
+      <tr><td><strong>QA</strong></td><td>Reddit-Flashcards / Nemotron / Wiki-RCQA</td><td>13.9B</td><td>13.9%</td></tr>
+      <tr><td><strong>Thinking</strong></td><td>QWQ / Llama-Nemotron / OpenThoughts2等推理链</td><td>8.3B</td><td>8.3%</td></tr>
+      <tr><td><strong>Instruction</strong></td><td>Dolmino 1 Flan + Tulu 3 SFT</td><td>6.1B</td><td>6.1%</td></tr>
+      <tr><td><strong>Web/PDF</strong></td><td>CC HQ + STEM-Heavy + olmOCR HQ</td><td>32.4B</td><td>32.5%</td></tr>
+    </table>
+  </div>
+
+  <h3>3.6 Midtraining 方法论</h3>
+  <div class="compare-grid">
+    <div class="card">
+      <div class="card-title">Microanneal — 分布式轻量测试</div>
+      <ul>
+        <li>5B目标数据 + 5B web数据 = 10B混合退火</li>
+        <li>与10B web-only基线对比</li>
+        <li>快速、廉价评估单个数据源的影响</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Integration Test — 集中评估</div>
+      <ul>
+        <li>定期汇总microanneal结果</li>
+        <li>100B候选混合完整退火训练</li>
+        <li>SFT训练后评估后训练效果</li>
+        <li>共进行5轮集成测试</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>3.7 Midtraining 关键发现</h3>
+  <div class="card">
+    <ul>
+      <li><strong>领域间显著trade-off:</strong> Math-code-thinking提升Math/Code但损害MC-QA/GenQA</li>
+      <li><strong>Thinking/Instruction有利:</strong> 包含vs不包含 — Average: 50.7 vs 48.8 (+1.9)</li>
+      <li><strong>特殊token应留在SFT:</strong> midtraining中加入chat template导致GSM8K从49.43降至0</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ Section 4 ============ -->
+<div class="section" id="s4">
+  <div class="section-header"><div class="section-num">4</div><h2>daVinci-LLM 与 OLMo 3 的系统对比</h2></div>
+
+  <h3>4.1 整体方法论对比</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th></th><th>daVinci-LLM</th><th>OLMo 3</th></tr>
+      <tr><td>模型规模</td><td>3B参数</td><td>7B / 32B参数</td></tr>
+      <tr><td>总训练tokens</td><td>8T</td><td>~6T + 100B + 50-100B</td></tr>
+      <tr><td>训练阶段</td><td>2阶段4子阶段</td><td>3阶段</td></tr>
+      <tr><td>混合优化方法</td><td>手动消融驱动(200+消融)</td><td>自动化Olmix + 微退火迭代</td></tr>
+      <tr><td>数据处理框架</td><td>Data Darwinism (L0-L9)</td><td>无统一框架，系统管线</td></tr>
+      <tr><td>QA引入时间</td><td>Stage 2 (最后2T)</td><td>Midtraining (最后100B)</td></tr>
+      <tr><td>开放程度</td><td>完全开放(含负面结果)</td><td>完全开放(含checkpoint/数据)</td></tr>
+    </table>
+  </div>
+
+  <h3>4.2 预训练数据混合比例对比</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th></th><th>daVinci Stage 1-1</th><th>daVinci Stage 1-2</th><th>OLMo 3 Pretrain</th></tr>
+      <tr><td>Web Text</td><td>68.2%</td><td>55.4%</td><td>76.1%</td></tr>
+      <tr><td>Code</td><td>9.53%</td><td>11.66%</td><td>6.89%</td></tr>
+      <tr><td>Science/Math</td><td>22.27%</td><td>32.92%</td><td>17.0%</td></tr>
+      <tr><td>QA/Task</td><td>0%</td><td>0%</td><td>0%</td></tr>
+    </table>
+  </div>
+
+  <h3>4.3 后期高质量数据混合对比</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th></th><th>daVinci 2-1</th><th>daVinci 2-2</th><th>OLMo 3 Midtrain</th></tr>
+      <tr><td>Web</td><td>10%</td><td>~8.85%</td><td>32.5%</td></tr>
+      <tr><td>Code</td><td>30%</td><td>~2.61%</td><td>20.0%</td></tr>
+      <tr><td>Science/Math</td><td>30%</td><td>~18.84%</td><td>19.2%</td></tr>
+      <tr><td>QA</td><td>30%</td><td><strong>~70%</strong></td><td>13.9%</td></tr>
+      <tr><td>Thinking</td><td>-</td><td>-</td><td>8.3%</td></tr>
+      <tr><td>Instruction</td><td>-</td><td>-</td><td>6.1%</td></tr>
+      <tr><td>总量</td><td>1T</td><td>1T</td><td>100B</td></tr>
+    </table>
+  </div>
+
+  <h3>4.6 关键共识</h3>
+  <div class="insight green">
+    <ol>
+      <li><strong>预训练后期应增加推理密集型数据</strong>(code, math, science)的比例</li>
+      <li><strong>结构化QA数据对推理能力提升至关重要</strong>，且效果优于仅调整领域比例</li>
+      <li><strong>领域间存在显著trade-off</strong>，需要在目标能力和通用能力之间平衡</li>
+      <li><strong>不同能力维度饱和速率不同</strong>: 通用知识快速饱和，推理能力持续提升</li>
+      <li><strong>数据质量(处理深度/重写)比简单扩大数据量更有效</strong></li>
+      <li><strong>渐进式课程学习优于静态混合</strong>——数据配方应随训练进度调整</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ Section 5 ============ -->
+<div class="section" id="s5">
+  <div class="section-header"><div class="section-num">5</div><h2>Data Mixture 相关文献综述</h2></div>
+
+  <h3>5.1 混合优化方法</h3>
+  <div class="card">
+    <p><span class="label">1</span><strong>RegMix</strong> [Liu et al., 2024] — arXiv:2407.01492</p>
+    <p>将数据混合优化建模为回归问题。训练大量小型代理模型(不同混合比例)，拟合回归模型预测任意混合的性能。OLMo 3 Olmix直接采用swarm-based approach。</p>
+  </div>
+  <div class="card">
+    <p><span class="label">2</span><strong>Data Mixing Laws</strong> [Ye et al., 2025] — arXiv:2403.16952</p>
+    <p>拟合参数化缩放定律来建模混合比例与性能的关系。提供显式函数形式，可解析或数值优化混合方案。</p>
+  </div>
+  <div class="card">
+    <p><span class="label">3</span><strong>CLIMB</strong> [Diao et al., 2025] — arXiv:2504.13161</p>
+    <p>基于聚类的迭代引导方法优化数据混合。与RegMix的一次性方法互补。</p>
+  </div>
+  <div class="card">
+    <p><span class="label">4</span><strong>DoReMi</strong> [Xie et al., 2024] — NeurIPS 2024</p>
+    <p>使用分布鲁棒优化(DRO)进行领域重加权。280M代理模型可使8B模型训练加速2.6x。</p>
+  </div>
+  <div class="card">
+    <p><span class="label">5</span><strong>Olmix</strong> [Chen et al., 2026]</p>
+    <p>Conditional mixing——将已优化混合作为"虚拟领域"冻结，仅在新/变化领域上重新优化。大幅降低重新优化成本。</p>
+  </div>
+
+  <h3>5.2 数据处理与质量</h3>
+  <div class="card">
+    <p><span class="label purple">6</span><strong>Data Darwinism</strong> [Qin et al., 2026] — arXiv:2602.07824 | <span class="label purple">7</span><strong>DCLM</strong> | <span class="label purple">8</span><strong>WebOrganizer</strong> [Wettig et al., 2025] — 24个主题分类</p>
+    <p><span class="label purple">9</span><strong>Nemotron-CC</strong> [Su et al., 2024] — arXiv:2412.02595 | <span class="label purple">10</span><strong>FineMath</strong> | <span class="label purple">11</span><strong>MegaMath</strong> [Zhou et al., 2025] | <span class="label purple">12</span><strong>olmOCR</strong> [Poznanski et al., 2025]</p>
+  </div>
+
+  <h3>5.3 LLM重写/数据合成</h3>
+  <div class="card">
+    <p><span class="label orange">13</span><strong>SwallowMath/Code</strong> — CraneMath microanneal: MATH +18.5, GSM8K +27.4</p>
+    <p><span class="label orange">14</span><strong>MegaMath-Web-Pro-Max</strong> — MATH +8.0, GSM8K +13.0</p>
+    <p><span class="label orange">15</span><strong>MIND Framework</strong> — 数学文档&rarr;多轮对话 | <span class="label orange">16</span><strong>OpenMathInstruct-2</strong> — 多候选解答</p>
+  </div>
+
+  <h3>5.4-5.5 预训练关系 &amp; 数据管线</h3>
+  <div class="card">
+    <p><span class="label green">17</span><strong>Front-loading Reasoning</strong> [Akter et al., 2025] — 预训练与后训练的协同 | <span class="label green">18</span><strong>Dolma</strong> [Soldaini et al., 2024] — 3T tokens开源管线</p>
+    <p><span class="label green">19</span><strong>OLMo 2</strong> — 引入microanneal | <span class="label green">20</span><strong>OlmoBaseEval</strong> — 43任务评估套件</p>
+  </div>
+</div>
+
+<!-- ============ Section 6 ============ -->
+<div class="section" id="s6">
+  <div class="section-header"><div class="section-num">6</div><h2>拟定 Data Mixture 实验方案</h2></div>
+
+  <h3>6.1 混合优化方法选择</h3>
+  <div class="compare-grid">
+    <div class="card"><div class="card-title">方案A: Swarm-based (OLMo 3路线)</div>训练~100个30M代理模型, Dirichlet采样, 拟合GLM搜索最优混合</div>
+    <div class="card"><div class="card-title">方案B: 消融驱动 (daVinci路线)</div>~1B模型, 500B tokens对照消融, 每次变化一个维度</div>
+  </div>
+  <div class="card"><div class="card-title">方案C: Microanneal (推荐先行)</div>从已有checkpoint出发, 每个候选数据源5-10B microanneal, 与web-only基线对比</div>
+  <div class="insight"><strong>建议:</strong> 先用方案C快速筛选数据源，再用方案A或B确定最终比例。</div>
+
+  <h3>6.2 预训练阶段的数据比例</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>变量</th><th>实验范围</th><th>依据</th></tr>
+      <tr><td>Web</td><td>[55%, 65%, 75%]</td><td>daVinci 55-68%, OLMo 76%</td></tr>
+      <tr><td>Code</td><td>[7%, 10%, 15%]</td><td>daVinci 9.5-11.7%, OLMo 7%</td></tr>
+      <tr><td>Science/Math</td><td>[15%, 22%, 30%]</td><td>daVinci 22-33%, OLMo 17%</td></tr>
+    </table>
+  </div>
+
+  <h3>6.3 数据处理深度的影响</h3>
+  <div class="card">
+    <ul>
+      <li><span class="level l2">L2</span> vs <span class="level l3">L3</span> Code过滤 — 预期MBPP适度提升</li>
+      <li>原始 vs <span class="level l4">L4</span> 数学精炼 — 预期MATH显著提升(+7.00)</li>
+      <li><span class="level l4">L4</span> vs <span class="level l5">L5</span> Science认知补全</li>
+      <li>LLM重写效果 (参考CraneMath/CraneCode)</li>
+    </ul>
+  </div>
+
+  <h3>6.4 后期高质量数据混合</h3>
+  <div class="card">
+    <ul>
+      <li><strong>QA引入 vs 纯比例调整</strong> — daVinci报告最大能力跃升来自此</li>
+      <li><strong>QA渐进式浓度:</strong> Stage 2-1测试[10%,30%,50%]; Stage 2-2测试[30%,50%,70%]</li>
+      <li><strong>领域平衡:</strong> C-10-S-10, C-30-S-10, C-30-S-30, C-40-S-20</li>
+      <li><strong>Thinking traces:</strong> 有/无thinking的midtraining mix对照</li>
+    </ul>
+  </div>
+
+  <h3>6.5 Quality-Aware Upsampling</h3>
+  <div class="card">
+    <ul>
+      <li>Flat filtering vs Quality-aware upsampling对比</li>
+      <li>最大上采样因子: [3x, 5x, 7x, 10x]</li>
+    </ul>
+  </div>
+
+  <h3>6.6 实验优先级排序</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>优先级</th><th>实验</th><th>依据</th></tr>
+      <tr><td><span class="priority p1">P1 高影响</span></td><td>6.4(1) QA引入 vs 纯比例调整</td><td>daVinci最大能力跃升</td></tr>
+      <tr><td><span class="priority p1">P1 高影响</span></td><td>6.4(2) QA渐进式浓度</td><td>核心混合策略</td></tr>
+      <tr><td><span class="priority p1">P1 高影响</span></td><td>6.3(2) 数学L4精炼</td><td>MATH +7.00</td></tr>
+      <tr><td><span class="priority p2">P2 中等</span></td><td>6.2(1) Web/Code/Science比例</td><td>基础比例优化</td></tr>
+      <tr><td><span class="priority p2">P2 中等</span></td><td>6.4(3) Code-Science平衡</td><td>C-30-S-30最优</td></tr>
+      <tr><td><span class="priority p2">P2 中等</span></td><td>6.3(4) LLM数据重写</td><td>CraneMath效果显著</td></tr>
+      <tr><td><span class="priority p3">P3 锦上添花</span></td><td>6.1 混合优化方法 / 6.5 Upsampling / 其他</td><td>方法论探索</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ Section 7 NEW ============ -->
+<div class="section" id="s7">
+  <div class="section-header"><div class="section-num">7</div><h2>补充分析: MiMo-7B, MiMo-V2-Flash, DeepSeek-V4 <span class="new-tag" style="font-size:0.5em;vertical-align:middle">NEW</span></h2></div>
+
+  <h3>7.1 MiMo-7B</h3>
+  <div class="card">
+    <p><span class="label">Xiaomi</span><span class="label green">7B dense</span><span class="label purple">~25T tokens</span></p>
+  </div>
+
+  <h4>数据来源与处理</h4>
+  <ul>
+    <li>数据来源: 网页、学术论文、书籍、编程代码、合成数据</li>
+    <li>开发专门HTML提取工具，优化数学公式和代码块保留 (trafilatura常丢失)</li>
+    <li>增强PDF解析处理STEM和代码内容</li>
+    <li>URL去重 + MinHash全局去重</li>
+    <li>微调小型LLM作为数据质量标注器(替代启发式规则过滤器，后者会错误移除数学/代码网页)</li>
+  </ul>
+
+  <div class="insight orange">
+    <strong>关键发现:</strong> 合成推理数据可以训练极多epoch而不会过拟合(与非推理数据截然不同)。
+  </div>
+
+  <h4>三阶段混合策略</h4>
+  <div class="timeline">
+    <div class="timeline-item">
+      <strong>Stage 1:</strong> 所有数据源(除合成推理响应)。下采样广告/新闻/招聘等低价值内容，上采样专业领域高质量数据。上下文: 8,192 tokens
+    </div>
+    <div class="timeline-item s2">
+      <strong>Stage 2:</strong> 数学+代码增加到 <strong>~70%</strong>。增强专业技能而不损害通用能力。上下文: 8,192 tokens
+    </div>
+    <div class="timeline-item s3">
+      <strong>Stage 3:</strong> 加入 <strong>~10%</strong> 合成推理响应(数学/代码/创意写作)。上下文扩展 8K &rarr; 32K
+    </div>
+  </div>
+
+  <h3>7.2 MiMo-V2-Flash</h3>
+  <div class="card">
+    <p><span class="label">Xiaomi</span><span class="label green">309B MoE (15B active)</span><span class="label purple">~27T tokens</span></p>
+  </div>
+
+  <h4>关键调整: 长程依赖数据</h4>
+  <ul>
+    <li>强调长文本网页文档</li>
+    <li>精选代码语料: 仓库级代码、pull request、issue、commit历史</li>
+    <li>目的: 增强长距离上下文关系和复杂多步推理</li>
+  </ul>
+
+  <h4>三阶段Data Scheduler</h4>
+  <div class="table-wrap">
+    <table>
+      <tr><th>阶段</th><th>Token范围</th><th>主要特征</th><th>合成推理</th><th>上下文</th></tr>
+      <tr><td><strong>Stage 1</strong> Pre-training</td><td>0-22T</td><td>多样化高质量通用语料</td><td>0%</td><td>32K</td></tr>
+      <tr><td><strong>Stage 2</strong> Mid-training</td><td>22-26T</td><td>上采样代码数据</td><td>~5%</td><td>32K</td></tr>
+      <tr><td><strong>Stage 3</strong> Context Ext.</td><td>26-27T</td><td>长程依赖上采样</td><td>~5%(沿用)</td><td>256K</td></tr>
+    </table>
+  </div>
+
+  <h4>MiMo-7B vs MiMo-V2-Flash</h4>
+  <div class="table-wrap">
+    <table>
+      <tr><th>维度</th><th>MiMo-7B</th><th>MiMo-V2-Flash</th></tr>
+      <tr><td>总训练tokens</td><td>~25T</td><td>~27T</td></tr>
+      <tr><td>Stage 1 上下文</td><td>8,192</td><td>32,768</td></tr>
+      <tr><td>Stage 2 Math+Code</td><td>~70%</td><td>上采样code + 5%合成推理</td></tr>
+      <tr><td>Stage 3 合成推理</td><td>~10%</td><td>沿用Stage 2分布</td></tr>
+      <tr><td>上下文扩展</td><td>8K &rarr; 32K</td><td>32K &rarr; 256K</td></tr>
+      <tr><td>长文本数据</td><td>未特别提及</td><td>刻意倾斜长程依赖</td></tr>
+    </table>
+  </div>
+
+  <h3>7.3 DeepSeek-V4</h3>
+  <div class="card">
+    <p><span class="label">DeepSeek</span><span class="label green">Flash: 284B (13B active) / Pro: 1.6T (49B active)</span><span class="label purple">32-33T tokens</span></p>
+  </div>
+
+  <h4>数据构建</h4>
+  <ul>
+    <li><strong>Web数据:</strong> 过滤批量自动生成和模板化内容，降低model collapse风险</li>
+    <li><strong>数学+编程:</strong> 仍是核心组成部分</li>
+    <li><strong>代码增强:</strong> mid-training加入agentic data</li>
+    <li><strong>多语言:</strong> 更大语料库，改善长尾文化知识</li>
+    <li><strong>长文档:</strong> 优先科学论文、技术报告等学术材料</li>
+    <li>总计 <strong>32T+</strong> tokens (未公开具体领域比例)</li>
+  </ul>
+
+  <h4>训练配置</h4>
+  <div class="table-wrap">
+    <table>
+      <tr><th></th><th>DeepSeek-V4-Flash</th><th>DeepSeek-V4-Pro</th></tr>
+      <tr><td>参数</td><td>284B (13B active)</td><td>1.6T (49B active)</td></tr>
+      <tr><td>训练量</td><td>32T</td><td>33T</td></tr>
+      <tr><td>峰值LR</td><td>2.7&times;10<sup>-4</sup></td><td>2.0&times;10<sup>-4</sup></td></tr>
+      <tr><td>序列长度</td><td colspan="2">4K &rarr; 16K &rarr; 64K &rarr; 1M (渐进式)</td></tr>
+      <tr><td>Dense warmup</td><td>1T tokens</td><td>&gt;1T tokens</td></tr>
+    </table>
+  </div>
+
+  <h4>Post-Training范式</h4>
+  <div class="card">
+    <ol>
+      <li><strong>独立培养领域专家:</strong> 对每个领域(数学/编码/agent/指令跟随)独立SFT+GRPO</li>
+      <li><strong>On-policy蒸馏合并:</strong> 统一学生模型从多教师学习，优化reverse KL loss</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ Section 8 NEW ============ -->
+<div class="section" id="s8">
+  <div class="section-header"><div class="section-num">8</div><h2>跨论文共识与补充结论 <span class="new-tag" style="font-size:0.5em;vertical-align:middle">NEW</span></h2></div>
+
+  <h3>8.1 原有共识的补充验证</h3>
+
+  <div class="card">
+    <div class="card-title">(1) 预训练后期应增加推理密集型数据 — 全部五篇一致确认</div>
+    <ul>
+      <li><strong>daVinci:</strong> Stage 1-2增加Science到33%</li>
+      <li><strong>OLMo 3:</strong> Midtraining引入19.2%数学+20%代码</li>
+      <li><strong>MiMo-7B:</strong> Stage 2将数学+代码到~70%</li>
+      <li><strong>MiMo-V2-Flash:</strong> Stage 2上采样代码+5%合成推理</li>
+      <li><strong>DeepSeek-V4:</strong> mid-training加入agentic data</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">(2) 合成推理数据至关重要 — MiMo补充关键发现</div>
+    <ul>
+      <li><strong>MiMo关键发现:</strong> 合成推理数据可训练极多epoch不过拟合</li>
+      <li><strong>daVinci:</strong> QA引入的增益远大于仅调整比例</li>
+      <li><strong>OLMo 3:</strong> Thinking traces带来+1.9 average提升</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">(3) 渐进式课程学习 — 所有论文均采用多阶段策略</div>
+    <ul>
+      <li>daVinci: 2阶段4子阶段 | OLMo 3: 3阶段 | MiMo-7B: 3阶段 | MiMo-V2-Flash: 3阶段 | DeepSeek-V4: 渐进式多阶段</li>
+    </ul>
+  </div>
+
+  <h3>8.2 新增跨论文共识</h3>
+
+  <div class="insight green">
+    <strong>(5) 上下文长度扩展普遍作为最后阶段独立处理</strong>
+    <ul>
+      <li>OLMo 3: Stage 3长上下文扩展 | MiMo-7B: Stage 3 8K&rarr;32K | MiMo-V2-Flash: Stage 3 32K&rarr;256K | DeepSeek-V4: 渐进4K&rarr;1M</li>
+    </ul>
+  </div>
+
+  <div class="insight purple">
+    <strong>(6) Mid-training阶段的普遍采用</strong>
+    <p>所有论文都在主预训练和后训练之间设置过渡阶段。共同特征: a) 数据分布显著变化 b) 学习率通常已开始衰减 c) 为后训练奠定基础</p>
+  </div>
+
+  <div class="insight orange">
+    <strong>(7) 合成/LLM重写数据在后期阶段大量使用</strong>
+    <p>daVinci(L4/L5) | OLMo 3(CraneMath/CraneCode) | MiMo(合成推理响应) | DeepSeek-V4(领域专家蒸馏)</p>
+  </div>
+
+  <div class="insight red">
+    <strong>(8) 专业化数据提取工具的重要性</strong>
+    <p>MiMo-7B明确指出: 通用提取器(trafilatura)常丢失推理密集内容(数学公式、代码块)。标准工具对推理内容存在系统性缺陷。</p>
+  </div>
+
+  <div class="insight">
+    <strong>(9) 学习率调度与数据混合阶段对齐</strong>
+    <p>所有论文都将学习率变化点与数据分布变化点对齐。引入专业化数据时通常降低学习率或进入cosine decay。</p>
+  </div>
+</div>
+
+<!-- ============ Section 9 NEW ============ -->
+<div class="section" id="s9">
+  <div class="section-header"><div class="section-num">9</div><h2>补充论文的实验方案启示 <span class="new-tag" style="font-size:0.5em;vertical-align:middle">NEW</span></h2></div>
+
+  <div class="card">
+    <div class="card-title">9.1 推理数据浓度的阶段递进</div>
+    <span class="label orange">来源: MiMo-7B / MiMo-V2-Flash</span>
+    <ul>
+      <li>对照A: 一次性Stage 2引入~70%数学+代码</li>
+      <li>对照B: 分两步递进 (先30%，再70%)</li>
+      <li>对照C: 全程固定比例 (如30%)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">9.2 合成推理数据的epoch耐受性 <span class="priority p1">P1 高影响</span></div>
+    <span class="label red">来源: MiMo-7B关键发现</span>
+    <ul>
+      <li>固定合成推理数据, 测试epoch = [1, 3, 5, 10, 20]</li>
+      <li>对照: 同epoch数的非推理合成数据</li>
+      <li>验证"合成推理数据不过拟合"的边界条件</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">9.3 长程依赖数据的影响</div>
+    <span class="label purple">来源: MiMo-V2-Flash</span>
+    <ul>
+      <li>对照A: 文件级代码数据</li>
+      <li>对照B: 仓库级代码+PR/issue/commit数据</li>
+      <li>评估长上下文(NIAH, GSM-Infinite)和标准代码任务</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">9.4 专业化提取工具的影响</div>
+    <span class="label green">来源: MiMo-7B</span>
+    <ul>
+      <li>对照A: 标准提取器(trafilatura)处理的网页数据</li>
+      <li>对照B: 数学/代码优化提取器处理的同源数据</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">9.5 领域专家蒸馏后训练</div>
+    <span class="label pink">来源: DeepSeek-V4 / MiMo-V2-Flash</span>
+    <ul>
+      <li>MiMo-V2-Flash MOPD效果: AIME 89.3&rarr;94.1 (超越最佳教师93.9)</li>
+      <li>对照A: 直接混合多领域SFT | 对照B: 先训练专家再蒸馏</li>
+    </ul>
+  </div>
+
+  <h3>9.6 更新后的实验优先级</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>优先级</th><th>实验</th></tr>
+      <tr><td><span class="priority p1">P1</span></td><td>6.4(1) QA引入 vs 纯比例调整</td></tr>
+      <tr><td><span class="priority p1">P1</span></td><td>6.4(2) QA渐进式浓度</td></tr>
+      <tr><td><span class="priority p1">P1</span></td><td>6.3(2) 数学L4精炼</td></tr>
+      <tr><td><span class="priority p1">P1</span></td><td><strong>9.2 合成推理数据epoch耐受性</strong> <span class="new-tag">NEW</span></td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td>6.2(1) Web/Code/Science比例</td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td>6.4(3) Code-Science领域平衡</td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td>6.3(4) LLM数据重写</td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td><strong>9.1 推理数据阶段递进</strong> <span class="new-tag">NEW</span></td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td><strong>9.4 专业化提取工具</strong> <span class="new-tag">NEW</span></td></tr>
+      <tr><td><span class="priority p3">P3</span></td><td>6.1 混合优化方法 / 6.5 Upsampling / 9.3 长程依赖 / 9.5 专家蒸馏 / 其他</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ Appendix ============ -->
+<div class="section" id="appendix">
+  <div class="section-header"><div class="section-num" style="background:var(--text-dim)">A</div><h2>附录: 关键数据表格汇总</h2></div>
+
+  <h3>A1. daVinci-LLM 各阶段混合方案</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Stage</th><th>Web(CC)</th><th>Code</th><th>Science</th><th>QA</th><th>Total</th></tr>
+      <tr><td>1-1</td><td>68.2%</td><td>9.53%</td><td>22.27%</td><td>0%</td><td>4T</td></tr>
+      <tr><td>1-2</td><td>55.42%</td><td>11.66%</td><td>32.92%</td><td>0%</td><td>2T</td></tr>
+      <tr><td>2-1</td><td>10%</td><td>30%</td><td>30%</td><td>30%</td><td>1T</td></tr>
+      <tr><td>2-2</td><td>~8.85%</td><td>~2.61%</td><td>~18.84%</td><td>~70%</td><td>1T</td></tr>
+    </table>
+  </div>
+
+  <h3>A2. OLMo 3 各阶段混合方案</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Stage</th><th>Web</th><th>Sci/PDF</th><th>Code</th><th>Math</th><th>QA</th><th>Think</th><th>Instr</th><th>Total</th></tr>
+      <tr><td>Pretrain</td><td>76.1%</td><td>14.5%</td><td>6.89%</td><td>2.56%</td><td>0%</td><td>0%</td><td>0%</td><td>5.93T</td></tr>
+      <tr><td>Midtrain</td><td>32.5%</td><td>-</td><td>20.0%</td><td>19.2%</td><td>13.9%</td><td>8.3%</td><td>6.1%</td><td>100B</td></tr>
+    </table>
+  </div>
+
+  <h3>A3. 消融结果 &amp; Microanneal效果</h3>
+  <div class="compare-grid">
+    <div class="card">
+      <div class="card-title">daVinci-LLM 消融</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>实验</th><th>指标</th><th>提升</th></tr>
+          <tr><td>L2&rarr;L3 Code</td><td>MBPP</td><td>+3.40</td></tr>
+          <tr><td>L4 Math精炼</td><td>MATH</td><td>+7.00</td></tr>
+          <tr><td>QA引入 vs 调比例</td><td>Science</td><td>+20.34 vs +15.75</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">OLMo 3 Microanneal</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>数据源</th><th>指标</th><th>提升</th></tr>
+          <tr><td>CraneMath</td><td>MATH</td><td>+18.5</td></tr>
+          <tr><td>CraneMath</td><td>GSM8K</td><td>+27.4</td></tr>
+          <tr><td>Meta-reasoning</td><td>HumanEval</td><td>+14</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h3>A8. 五篇论文 Data Mixture 综合对比</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>论文</th><th>总训练量</th><th>阶段数</th><th>推理数据引入时机</th><th>上下文扩展</th></tr>
+      <tr><td><strong>daVinci-LLM</strong></td><td>8T</td><td>2(4子)</td><td>Stage 2 (后25%)</td><td>未明确</td></tr>
+      <tr><td><strong>OLMo 3</strong></td><td>~6.1T</td><td>3</td><td>Midtrain (后~1.6%)</td><td>Stage 3</td></tr>
+      <tr><td><strong>MiMo-7B</strong></td><td>~25T</td><td>3</td><td>Stage 2 (中期)</td><td>Stage 3 8K&rarr;32K</td></tr>
+      <tr><td><strong>MiMo-V2-Flash</strong></td><td>~27T</td><td>3</td><td>Stage 2 (后~19%)</td><td>Stage 3 32K&rarr;256K</td></tr>
+      <tr><td><strong>DeepSeek-V4</strong></td><td>32-33T</td><td>渐进</td><td>Mid-training</td><td>渐进 4K&rarr;1M</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>Data Mixture 方案调研报告 | 2026-04-29</p>
+  <p>基于 daVinci-LLM, OLMo 3, MiMo-7B, MiMo-V2-Flash, DeepSeek-V4 五篇论文原文内容，未包含推测性或发散性内容。</p>
+</div>
+
+</div>
+
+<a href="#toc" class="back-top">&uarr;</a>
+
+</body>
+</html>
